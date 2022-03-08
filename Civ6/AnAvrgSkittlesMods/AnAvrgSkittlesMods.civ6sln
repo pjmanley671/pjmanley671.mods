@@ -1,0 +1,19 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# ModBuddy Solution File, Format Version 12.00
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{5DAE07AF-E217-45C1-8DE7-FF99D6011E8A}") = "AnAvrgSkittlesMods", "AnAvrgSkittlesMods\AnAvrgSkittlesMods.civ6proj", "{3A7003ED-9315-4199-AA66-D15D2EE298A1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Default|Civ6 = Default|Civ6
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A7003ED-9315-4199-AA66-D15D2EE298A1}.Default|Civ6.ActiveCfg = Default|Civ6
+		{3A7003ED-9315-4199-AA66-D15D2EE298A1}.Default|Civ6.Build.0 = Default|Civ6
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

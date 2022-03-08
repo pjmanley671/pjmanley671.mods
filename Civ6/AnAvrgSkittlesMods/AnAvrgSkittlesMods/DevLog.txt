@@ -1,0 +1,103 @@
+=== Setup process reference ===
+
+https://forums.civfanatics.com/threads/is-there-any-way-to-create-a-map-without-touching-the-world-builder.634917/
+
+#### PREVIEW - Setup ####
+
+--- InGameActions | ImportFiles ---
+<InGameActions>
+    <ImportFiles id="YourMap_IMPORT">
+        <File>YourMapScript.lua</File>
+    </ImportFiles>
+<InGameActions>
+
+--- XML ---
+<GameData>
+    <Maps>
+        <Row File="YourMapScript.lua" Name="LOC_YOURMAP_NAME" Description="LOC_YOURMAP_DESC" SortIndex="50"/>
+        <Row Domain="Maps:Expansion1Maps" File="YourMapScript.lua" Name="LOC_YOURMAP_NAME" Description="LOC_YOURMAP_DESC" SortIndex="50"/>
+    </Maps>
+</GameData>
+
+--- FrontEndActions | UpdateDatabase ---
+<FrontEndActions>
+    <UpdateDatabase id="YourMap_SETTING">
+        <File>Config.xml</File>
+    </UpdateDatabase>
+</FrontEndActions>
+
+<code> DO NOT USE the written code it does not generate </code>
+
+#### Maps/BetterIslands.lua Edits ####
+<copy> Expansion1\Maps\Archipelago.lua </copy>
+
+<edit group="function GeneratePlotTypes()">
+	<remove section="Generate Large Islands">
+		---- Generate Large Islands	
+		--local args = {};	
+		--args.iWaterPercent = 75 + water_percent_modifier;
+		--args.iRegionWidth = math.ceil(g_iW);
+		--args.iRegionHeight = math.ceil(g_iH);
+		--args.iRegionWestX = math.floor(0);
+		--args.iRegionSouthY = math.floor(0);
+		--args.iRegionGrain = 3;
+		--args.iRegionHillsGrain = 4;
+		--args.iRegionPlotFlags = g_iFlags;
+		--args.iRegionFracXExp = 6;
+		--args.iRegionFracYExp = 5;
+		--plotTypes = GenerateFractalLayerWithoutHills(args, plotTypes);
+		--islands = plotTypes;
+	</remove>
+
+	<simplify group="GeneratePlotTypes()">
+		Local sea_Level
+			-origianl
+				local sea_level = MapConfiguration.GetValue("sea_level");
+				if sea_level == 1 then -- Low Sea Level
+					water_percent_modifier = -4
+				elseif sea_level == 2 then -- Normal Sea Level
+					water_percent_modifier = 0;
+				elseif sea_level == 3 then -- High Sea Level
+					water_percent_modifier = 4;
+				else
+					water_percent_modifier = TerrainBuilder.GetRandomNumber(9, "Random Sea Level - Lua") - 4;
+				end
+
+		Local world_age
+			-original
+				local world_age = MapConfiguration.GetValue("world_age");
+				if (world_age == 1) then
+					world_age = world_age_new; -- 3
+				elseif (world_age == 2) then
+					world_age = world_age_normal; -- 2
+				elseif (world_age == 3) then
+					world_age = world_age_old; -- 1
+				else
+					world_age = 1 + TerrainBuilder.GetRandomNumber(3, "Random World Age - Lua");
+				end
+	</simplify>
+
+	<edit group="function Adjacent(index)">
+		<for loop>
+			-original
+			if(aIslands  ~= nil and aIslands[newIndex] == g_PLOT_TYPE_LAND) then
+				return true;
+			end
+
+			-to
+			if(aIslands[newIndex] == g_PLOT_TYPE_LAND) then return true; end
+		</for loop>
+	</remove>
+
+	<simplify group="">
+		-original
+			if val <= iWaterThreshold or Adjacent(i) == true then
+				--do nothing
+			else
+				plotTypes2[i] = g_PLOT_TYPE_LAND;
+			end
+
+		-to
+			if val > iWaterThreshold and Adjacent(i) == false then plotTypes2[i] = g_PLOT_TYPE_LAND end
+	</simplify>
+</edit>

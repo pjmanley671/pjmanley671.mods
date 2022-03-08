@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Config -->
+<!-- Author: AnAvrgSkittle -->
+<!-- DateCreated: 3/4/2022 6:14:52 PM -->
+<GameData>
+	<Maps>
+		<Row File="BetterIslands.lua" Name="Better Islands" Description="Better Islands map from AnAvrgSkittlesMods" SortIndex="50"/>
+		<Row Domain="Maps:Expansion1Maps" File="BetterIslands.lua" Name="Better Islands" Description="Better Islands map from AnAvrgSkittlesMods" SortIndex="50"/>
+	</Maps>
+</GameData>
